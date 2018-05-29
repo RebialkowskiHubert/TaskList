@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ToDoListModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Priorytety">
+    <Key>
+      <PropertyRef Name="Id_priorytet" />
+    </Key>
+    <Property Name="Id_priorytet" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nazwa_priorytet" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Statusy">
+    <Key>
+      <PropertyRef Name="Id_status" />
+    </Key>
+    <Property Name="Id_status" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nazwa_status" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Zadania">
+    <Key>
+      <PropertyRef Name="Id_zadanie" />
+    </Key>
+    <Property Name="Id_zadanie" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Temat" Type="nvarchar" MaxLength="50" />
+    <Property Name="Opis" Type="nvarchar(max)" />
+    <Property Name="Wpisano" Type="datetime" Nullable="false" />
+    <Property Name="Data" Type="datetime" Nullable="false" />
+    <Property Name="Priorytet_Id_priorytet" Type="int" />
+    <Property Name="Status_Id_status" Type="int" />
+  </EntityType>
+  <Association Name="FK_dbo_Zadania_dbo_Priorytety_Priorytet_Id_priorytet">
+    <End Role="Priorytety" Type="Self.Priorytety" Multiplicity="0..1" />
+    <End Role="Zadania" Type="Self.Zadania" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Priorytety">
+        <PropertyRef Name="Id_priorytet" />
+      </Principal>
+      <Dependent Role="Zadania">
+        <PropertyRef Name="Priorytet_Id_priorytet" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Zadania_dbo_Statusy_Status_Id_status">
+    <End Role="Statusy" Type="Self.Statusy" Multiplicity="0..1" />
+    <End Role="Zadania" Type="Self.Zadania" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Statusy">
+        <PropertyRef Name="Id_status" />
+      </Principal>
+      <Dependent Role="Zadania">
+        <PropertyRef Name="Status_Id_status" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ToDoListModelStoreContainer">
+    <EntitySet Name="Priorytety" EntityType="Self.Priorytety" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Statusy" EntityType="Self.Statusy" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Zadania" EntityType="Self.Zadania" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_dbo_Zadania_dbo_Priorytety_Priorytet_Id_priorytet" Association="Self.FK_dbo_Zadania_dbo_Priorytety_Priorytet_Id_priorytet">
+      <End Role="Priorytety" EntitySet="Priorytety" />
+      <End Role="Zadania" EntitySet="Zadania" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Zadania_dbo_Statusy_Status_Id_status" Association="Self.FK_dbo_Zadania_dbo_Statusy_Status_Id_status">
+      <End Role="Statusy" EntitySet="Statusy" />
+      <End Role="Zadania" EntitySet="Zadania" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ToDoListModelStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="Priorytety">
+      <EntityTypeMapping TypeName="ToDoListModel.Priorytety">
+        <MappingFragment StoreEntitySet="Priorytety">
+          <ScalarProperty Name="Id_priorytet" ColumnName="Id_priorytet" />
+          <ScalarProperty Name="Nazwa_priorytet" ColumnName="Nazwa_priorytet" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Statusy">
+      <EntityTypeMapping TypeName="ToDoListModel.Statusy">
+        <MappingFragment StoreEntitySet="Statusy">
+          <ScalarProperty Name="Id_status" ColumnName="Id_status" />
+          <ScalarProperty Name="Nazwa_status" ColumnName="Nazwa_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Zadania">
+      <EntityTypeMapping TypeName="ToDoListModel.Zadania">
+        <MappingFragment StoreEntitySet="Zadania">
+          <ScalarProperty Name="Id_zadanie" ColumnName="Id_zadanie" />
+          <ScalarProperty Name="Temat" ColumnName="Temat" />
+          <ScalarProperty Name="Opis" ColumnName="Opis" />
+          <ScalarProperty Name="Wpisano" ColumnName="Wpisano" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+          <ScalarProperty Name="Priorytet_Id_priorytet" ColumnName="Priorytet_Id_priorytet" />
+          <ScalarProperty Name="Status_Id_status" ColumnName="Status_Id_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

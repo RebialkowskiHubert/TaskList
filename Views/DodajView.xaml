@@ -1,0 +1,105 @@
+﻿<Window x:Class="ToDoList.Views.DodajView"
+        x:Name="DodajWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:helpers="clr-namespace:ToDoList.Helpers"
+        helpers:ViewModelLocator.AutoHookedUpViewModel="True"
+        mc:Ignorable="d"
+        Title="{Binding Tytul}" Height="400" Width="300">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="Converter"/>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="3">
+            <TextBlock Text="Temat:" Width="50"/>
+            <TextBox Width="180" Text="{Binding NoweZadanie.Temat, Mode=TwoWay}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="3">
+            <TextBlock Text="Opis:" Width="50" Height="100"/>
+            <TextBox 
+                Width="180" 
+                Height="100"
+                Text="{Binding NoweZadanie.Opis, Mode=TwoWay}"
+                ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                TextWrapping="Wrap"
+                AcceptsReturn="True"
+                AcceptsTab="True"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="3">
+            <TextBlock Text="Priorytet:" Width="50"/>
+            <ComboBox 
+                Width="180" 
+                ItemsSource="{Binding Priorytety}" 
+                DisplayMemberPath="Nazwa_priorytet"
+                SelectedValue="{Binding PriorytetZad, Mode=TwoWay}"
+                SelectedValuePath="Nazwa_priorytet"
+                IsSynchronizedWithCurrentItem="True"/>
+        </StackPanel>
+
+        <StackPanel 
+            Grid.Row="3"
+            Orientation="Horizontal"
+            Margin="3"
+            Visibility="{Binding Edycja, Converter={StaticResource Converter}}">
+            <TextBlock Text="Data:" Width="50"/>
+            <DatePicker Width="180" SelectedDate="{Binding NoweZadanie.Data}"/>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="3">
+            <TextBlock Text="Czas:" Width="50"/>
+            <ComboBox ItemsSource="{Binding Godziny}" SelectedValue="{Binding Godzina, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" Margin="3"/>
+            <TextBlock Text=":" Width="3" Margin="3"/>
+            <ComboBox ItemsSource="{Binding Minuty}" SelectedValue="{Binding Minuta, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" Margin="3"/>
+        </StackPanel>
+
+        <StackPanel 
+            Grid.Row="5" 
+            Orientation="Horizontal" 
+            Margin="3"
+            Visibility="{Binding Edycja, Converter={StaticResource Converter}}">
+            <TextBlock Text="Status:" Width="50"/>
+            <ComboBox 
+                ItemsSource="{Binding Statusy}" 
+                SelectedValue="{Binding StatusZad, Mode=TwoWay}"
+                SelectedValuePath="Nazwa_status"
+                DisplayMemberPath="Nazwa_status" 
+                IsSynchronizedWithCurrentItem="True" 
+                Width="180" 
+                Margin="3"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="6" Orientation="Horizontal" Margin="3" HorizontalAlignment="Center">
+            <Button 
+                Content="Dodaj" 
+                Command="{Binding DodajCommand}" 
+                CommandParameter="{Binding ElementName=DodajWindow}" 
+                Width="100" 
+                Margin="5"
+                Visibility="{Binding Dodawanie, Converter={StaticResource Converter}}"/>
+            <Button 
+                Content="Zapisz" 
+                Command="{Binding EdytujCommand}" 
+                CommandParameter="{Binding ElementName=DodajWindow}" 
+                Width="100" 
+                Margin="5"
+                Visibility="{Binding Edycja, Converter={StaticResource Converter}}"/>
+            <Button Content="Anuluj" Command="{Binding AnulujCommand}" CommandParameter="{Binding ElementName=DodajWindow}" Width="100" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Window>

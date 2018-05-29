@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ToDoListModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Priorytety">
+    <Key>
+      <PropertyRef Name="Id_priorytet" />
+    </Key>
+    <Property Name="Id_priorytet" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nazwa_priorytet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Zadania" Relationship="Self.FK_dbo_Zadania_dbo_Priorytety_Priorytet_Id_priorytet" FromRole="Priorytety" ToRole="Zadania" />
+  </EntityType>
+  <EntityType Name="Statusy">
+    <Key>
+      <PropertyRef Name="Id_status" />
+    </Key>
+    <Property Name="Id_status" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nazwa_status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Zadania" Relationship="Self.FK_dbo_Zadania_dbo_Statusy_Status_Id_status" FromRole="Statusy" ToRole="Zadania" />
+  </EntityType>
+  <EntityType Name="Zadania">
+    <Key>
+      <PropertyRef Name="Id_zadanie" />
+    </Key>
+    <Property Name="Id_zadanie" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Temat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Opis" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Wpisano" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Priorytet_Id_priorytet" Type="Int32" />
+    <Property Name="Status_Id_status" Type="Int32" />
+    <NavigationProperty Name="Priorytety" Relationship="Self.FK_dbo_Zadania_dbo_Priorytety_Priorytet_Id_priorytet" FromRole="Zadania" ToRole="Priorytety" />
+    <NavigationProperty Name="Statusy" Relationship="Self.FK_dbo_Zadania_dbo_Statusy_Status_Id_status" FromRole="Zadania" ToRole="Statusy" />
+  </EntityType>
+  <Association Name="FK_dbo_Zadania_dbo_Priorytety_Priorytet_Id_priorytet">
+    <End Role="Priorytety" Type="Self.Priorytety" Multiplicity="0..1" />
+    <End Role="Zadania" Type="Self.Zadania" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Priorytety">
+        <PropertyRef Name="Id_priorytet" />
+      </Principal>
+      <Dependent Role="Zadania">
+        <PropertyRef Name="Priorytet_Id_priorytet" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Zadania_dbo_Statusy_Status_Id_status">
+    <End Role="Statusy" Type="Self.Statusy" Multiplicity="0..1" />
+    <End Role="Zadania" Type="Self.Zadania" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Statusy">
+        <PropertyRef Name="Id_status" />
+      </Principal>
+      <Dependent Role="Zadania">
+        <PropertyRef Name="Status_Id_status" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Priorytety" EntityType="Self.Priorytety" />
+    <EntitySet Name="Statusy" EntityType="Self.Statusy" />
+    <EntitySet Name="Zadania" EntityType="Self.Zadania" />
+    <AssociationSet Name="FK_dbo_Zadania_dbo_Priorytety_Priorytet_Id_priorytet" Association="Self.FK_dbo_Zadania_dbo_Priorytety_Priorytet_Id_priorytet">
+      <End Role="Priorytety" EntitySet="Priorytety" />
+      <End Role="Zadania" EntitySet="Zadania" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Zadania_dbo_Statusy_Status_Id_status" Association="Self.FK_dbo_Zadania_dbo_Statusy_Status_Id_status">
+      <End Role="Statusy" EntitySet="Statusy" />
+      <End Role="Zadania" EntitySet="Zadania" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
